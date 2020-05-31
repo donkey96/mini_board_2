@@ -23,7 +23,7 @@ var User = Bookshelf.Model.extend({
 });
 
 var Message = Bookshelf.Model.extend({
-  tableName: 'message',
+  tableName: 'messages',
   hasTimestamps: 'true',
   user: function() {
     return this.belongsTo(User);
@@ -34,21 +34,19 @@ router.get('/', function(req, res, next) {
   if (req.session.login == null) {
     res.redirect('/users');
   } else {
-    res.redirect('/1');
+    res.redirect('/page1');
   }
 });
 
-router.get('/:page', function(req, res, next) {
+router.get('/page:page', function(req, res, next) {
   if (req.session.login == null) {
     res.redirect('/users');
     return;
   }
   var pg = req.params.page;
   pg *= 1;
-  if (pag < 1) { pg = 1; }
-  new Message().orderBy('created_at', 'DESC')
-  .fetchPage({ page: pg, pageSize: 10, withRelated: ['user'] })
-  .then(function(collection) {
+  if (pg < 1) { pg = 1; }
+  new Message().orderBy('created_at', 'DESC').fetchPage({ page: pg, pageSize: 10, withRelated: ['user'] }).then(function(collection) {
     var data = {
       title: 'miniBoard',
       login: req.session.login,
