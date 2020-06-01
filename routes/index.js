@@ -34,11 +34,11 @@ router.get('/', function(req, res, next) {
   if (req.session.login == null) {
     res.redirect('/users');
   } else {
-    res.redirect('/page1');
+    res.redirect('/1');
   }
 });
 
-router.get('/page:page', function(req, res, next) {
+router.get('/:page', function(req, res, next) {
   if (req.session.login == null) {
     res.redirect('/users');
     return;
