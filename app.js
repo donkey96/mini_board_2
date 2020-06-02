@@ -32,9 +32,9 @@ var session_opt = {
 };
 app.use(session(session_opt));
 
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home', homeRouter);
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
